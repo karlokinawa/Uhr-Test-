@@ -1,16 +1,29 @@
+const CACHE_NAME = 'fm8002-pwa-v1';
+const URLS = [
+  './',
+  './index.html',
+  './manifest.json',
+  './service-worker.js',
+  './icon-192.png',
+  './icon-512.png'
+];
 
-self.addEventListener('install', e => {
-  e.waitUntil(
-    caches.open('clock-cache').then(cache => {
-      return cache.addAll(['index.html']);
-    })
-  );
+self.addEventListener('install', event => {
+  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(URLS)));
+  self.skipWaiting();
 });
 
-self.addEventListener('fetch', e => {
-  e.respondWith(
-    caches.match(e.request).then(response => {
-      return response || fetch(e.request);
-    })
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(keys => Promise.all(
+      keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
+    ))
+  );
+  self.clients.claim();
+});
+
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request).then(response => response || fetch(event.request))
   );
 });

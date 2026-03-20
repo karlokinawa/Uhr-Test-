@@ -1,10 +1,10 @@
 {
-  "name": "Franck Muller Clock",
-  "short_name": "FM Clock",
-  "start_url": "index.html",
+  "name": "Franck Muller Conquistador Model 8002 CC",
+  "short_name": "FM 8002 CC",
+  "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#000000",
+  "background_color": "#111111",
+  "theme_color": "#111111",
   "icons": [
     {
       "src": "icon-192.png",
